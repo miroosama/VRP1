@@ -206,17 +206,17 @@ function loadLiquidFillGauge(elementId, value, config) {
     } else {
         waveGroup.attr('transform', 'translate(' + waveGroupXPosition + ',' + waveRiseScale(fillPercent) + ')');
     }
-
-    if (config.waveAnimate) animateWave();
-
-    function animateWave() {
-        wave.transition()
-            .duration(config.waveAnimateTime)
-            .ease("linear")
-            .attr('transform', 'translate(' + waveAnimateScale(1) + ',0)')
-            .on("end", function () {
-            wave.attr('transform', 'translate(' + waveAnimateScale(0) + ',0)');
-            animateWave(config.waveAnimateTime);
-        });
-    }
+    // 
+    // if (config.waveAnimate) animateWave();
+    //
+    // function animateWave() {
+    //     wave.transition()
+    //         .duration(config.waveAnimateTime)
+    //         .ease("linear")
+    //         .attr('transform', 'translate(' + waveAnimateScale(1) + ',0)')
+    //         .on("end", function () {
+    //         wave.attr('transform', 'translate(' + waveAnimateScale(0) + ',0)');
+    //         animateWave(config.waveAnimateTime);
+    //     });
+    // }
 }

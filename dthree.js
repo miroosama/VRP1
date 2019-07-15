@@ -126,23 +126,73 @@ drawGraticule();
 enableRotation();
 
 function drawGlobe() {
-    d3.queue()
-        .defer(d3.json, 'https://cors-anywhere.herokuapp.com/https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-110m.json')
-        // .defer(d3.json, './locations.json')
-        .await((error, worldData) => {
-            svg.selectAll(".segment")
-                .data(topojson.feature(worldData, worldData.objects.countries).features)
-                .enter().append("path")
-                .attr("class", "segment")
-                .attr("d", path)
-                .style("stroke", "#888")
-                .style("stroke-width", "1px")
-                .style("fill", (d, i) => '#e5e5e5')
-                .style("opacity", ".6");
-                // locations = locationData;
-                // drawMarkers();
-        });
+    // var q = d3.queue();
+    // // console.log(d3.json('https://cors-anywhere.herokuapp.com/https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-110m.json').then(res=>{console.log(res)}))
+    //     q.defer(a, d3.json, 'https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-110m.json')
+    //     q.await(b)
+    d3.json("https://cors-anywhere.herokuapp.com/https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-110m.json", function(error, data) {
+
+             // Handle errors getting and parsing the data
+             if (error) { return error; }
+
+             // setting the circle size (not radius!) according to the number of inhabitants per city
+             // population_array = [];
+             // for (i = 0; i < data.features.length; i++) {
+             //    population_array.push(data.features[i].properties.population);
+             // }
+             // max_population = population_array.sort(d3.descending)[0]
+             // var rMin = 0;
+             // var rMax = Math.sqrt(max_population / (peoplePerPixel * Math.PI));
+             // rScale.domain([0, max_population]);
+             // rScale.range([rMin, rMax]);
+             //
+             // path.pointRadius(function(d) {
+             //    return d.properties ? rScale(d.properties.population) : 1;
+             //
+             // });
+
+             // Drawing transparent circle markers for cities
+             // g.selectAll("path.cities").data(data.features)
+             //    .enter().append("path")
+             //    .attr("class", "cities")
+             //    .attr("d", path)
+             //    .attr("fill", "#ffba00")
+             //    .attr("fill-opacity", 0.3);
+             svg.selectAll(".segment")
+                 .data(topojson.feature(data, data.objects.countries).features)
+                 .enter().append("path")
+                 .attr("class", "segment")
+                 .attr("d", path)
+                 .style("stroke", "#888")
+                 .style("stroke-width", "1px")
+                 .style("fill", (d, i) => '#e5e5e5')
+                 .style("opacity", ".9");
+
+             // start spinning!
+
+    })
+  }
+
+
+function a(x, y, callback) {
+  console.log(y)
+  callback(null, y);
 }
+
+function b(err, worldData) {
+  console.log(worldData)
+  svg.selectAll(".segment")
+      .data(topojson.feature(worldData, worldData.objects.countries).features)
+      .enter().append("path")
+      .attr("class", "segment")
+      .attr("d", path)
+      .style("stroke", "#888")
+      .style("stroke-width", "1px")
+      .style("fill", (d, i) => '#e5e5e5')
+      .style("opacity", ".9");
+      // locations = locationData;
+      // drawMarkers();
+ }
 
 function drawGraticule() {
     const graticule = d3.geoGraticule()
