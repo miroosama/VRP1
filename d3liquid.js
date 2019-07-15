@@ -1,4 +1,4 @@
-loadLiquidFillGauge("fillgauge1", 20.60);
+loadLiquidFillGauge("fillgauge1", 40.60);
 
 
 function liquidFillGaugeDefaultSettings() {
@@ -22,7 +22,7 @@ function liquidFillGaugeDefaultSettings() {
         valueCountUp: true, // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
         displayPercent: true, // If true, a % symbol is displayed after the value.
         textColor: "#045681", // The color of the value text when the wave does not overlap it.
-        waveTextColor: "#A4DBf8" // The color of the value text when the wave overlaps it.
+        waveTextColor: "#A4DBf8", // The color of the value text when the wave overlaps it.
     };
 }
 
@@ -30,14 +30,14 @@ function loadLiquidFillGauge(elementId, value, config) {
     if (config == null) config = liquidFillGaugeDefaultSettings();
     console.log(elementId)
     var gauge = d3.select("#" + elementId);
-    var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
+    // var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
     console.log(gauge)
     var radius = 280
-
+    console.log(gauge.style("opacity"))
     // var locationX = parseInt(gauge.style("width")) / 2 - radius;
     // var locationY = parseInt(gauge.style("height")) / 2 - radius;
     var locationX = 200
-    var locationY = 0
+    var locationY = -20
     var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
 
     var waveHeightScale;
@@ -125,6 +125,7 @@ function loadLiquidFillGauge(elementId, value, config) {
         .innerRadius(gaugeCircleY(radius - circleThickness));
     gaugeGroup.append("path")
         .attr("d", gaugeCircleArc)
+        .style("opacity", .0)
         .style("fill", config.circleColor)
         .attr('transform', 'translate(' + radius + ',' + radius + ')');
 
@@ -134,6 +135,7 @@ function loadLiquidFillGauge(elementId, value, config) {
         .attr("class", "liquidFillGaugeText")
         .attr("text-anchor", "middle")
         .attr("font-size", textPixels + "px")
+        .style("opacity", .25)
         .style("fill", config.textColor)
         .attr('transform', 'translate(' + radius + ',' + textRiseScaleY(config.textVertPosition) + ')');
 
@@ -162,11 +164,13 @@ function loadLiquidFillGauge(elementId, value, config) {
         .attr("cx", radius)
         .attr("cy", radius)
         .attr("r", fillCircleRadius)
+        .style("opacity", .25)
         .style("fill", config.waveColor);
 
     // Text where the wave does overlap.
     var text2 = fillCircleGroup.append("text")
         .text(textRounder(textStartValue) + percentText)
+        .style("opacity", .6)
         .attr("class", "liquidFillGaugeText")
         .attr("text-anchor", "middle")
         .attr("font-size", textPixels + "px")
