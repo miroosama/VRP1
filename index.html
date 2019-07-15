@@ -2,7 +2,17 @@
 
 <html lang="en-us">
 <style>
+  .placement {
+    left: 20%;
+    top: 500px;
+    position: absolute;
 
+},
+.placement1 {
+  top: 100px;
+  position: fixed;
+  z-index: 100;
+}
 </style>
 
 <head>
@@ -13,13 +23,24 @@
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <canvas width="960" height="960"></canvas>
   <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <!-- <canvas width="960" height="960"></canvas> -->
+    <svg id="fillgauge1" width="760" height="1252">
+      <!-- <filter id="monochrome"><feColorMatrix type="saturate" values="0"></feColorMatrix></filter> -->
+      <!-- <defs><image id="image" width="100%" height="100%" xlink:href="https://www.nycgo.com/images/articles/9176/wallstreet_taggeryanceyiv_5473__large.jpg"></image></defs> -->
+      <!-- <use id="monochrome-image" filter="url(#monochrome)" xlink:href="#image"></use> -->
+      <!-- <use id="color-image" xlink:href="#image"></use> -->
+      <svg id="globe" class="placement"></svg>
+    </svg>
+  <!-- <svg id="fillgauge1" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg> -->
 </head>
 
 <body>
   <!-- Train Time -->
   <!-- Script -->
+  <script src="d3liquid.js"></script>
   <script src="dthree.js"></script>
   <script src="carbon.js"></script>
 
